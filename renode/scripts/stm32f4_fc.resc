@@ -1,0 +1,11 @@
+using sysbus
+$name ?= "stm32f4-fc"
+mach create $name
+machine LoadPlatformDescription @platforms/boards/stm32f4_discovery.repl
+$bin ?= @/home/leedongho/stm32-flight-controller/build/firmware.elf
+showAnalyzer usart2
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+runMacro $reset

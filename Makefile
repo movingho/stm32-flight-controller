@@ -50,9 +50,12 @@ $(BUILD_DIR)/%.o: $(FREERTOS_DIR)/portable/GCC/ARM_CM4F/%.c
 $(BUILD_DIR)/%.o: $(FREERTOS_DIR)/portable/MemMang/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+LDFLAGS = -T src/stm32f4.ld -Wl,--gc-sections -nostartfiles
+
+
 # .o → .elf 링킹
 $(TARGET).elf: $(OBJS)
-	$(CC) $(MCU) $(OBJS) -o $@
+	$(CC) $(MCU) $(LDFLAGS) $(OBJS) -o $@
 
 # .elf → .bin 변환
 $(TARGET).bin: $(TARGET).elf
